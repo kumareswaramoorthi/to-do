@@ -1,8 +1,6 @@
 package model
 
 import (
-	"html"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -76,10 +74,4 @@ func (u *User) HashBeforeSave() error {
 }
 func (u *User) Prepare() {
 	u.ID = 0
-	u.Name = html.EscapeString(u.Name)
-
-}
-func (td *Todo) Prepare() {
-	td.ID = 0
-	td.Title = html.EscapeString(td.Title)
 }

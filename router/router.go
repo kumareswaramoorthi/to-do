@@ -19,20 +19,20 @@ func SetupRouter() *gin.Engine {
 	//create access variables
 	todoDatabase := database.NewTodoDatabase(db)
 	todoService := services.NewTodoService(todoDatabase)
-	todoController := controller.NewTodoController(todoService)
+	ctrl := controller.NewTodoController(todoService)
 	todo := router.Group("/api/todo/v1/")
 	{
-		todo.POST("/signup", todoController.SignUp)
-		todo.POST("/signin", todoController.SignIn)
-		todo.POST("/addtodo", middleware.TokenAuthMiddleware(), todoController.AddTodo)
-		todo.DELETE("/deletetodo", middleware.TokenAuthMiddleware(), todoController.DeleteTodo)
-		todo.PUT("/edittodo", middleware.TokenAuthMiddleware(), todoController.EditTodo)
-		todo.GET("/getalltodos", middleware.TokenAuthMiddleware(), todoController.GetAllTodos)
-		todo.GET("/gettodobycategory", middleware.TokenAuthMiddleware(), todoController.GetTodoByCategory)
-		todo.POST("/marktodo", middleware.TokenAuthMiddleware(), todoController.MarkTodo)
-		todo.POST("/addcategory", middleware.TokenAuthMiddleware(), todoController.AddCategory)
-		todo.GET("/getcategory", middleware.TokenAuthMiddleware(), todoController.GetCategory)
-		todo.DELETE("/deletecategory", middleware.TokenAuthMiddleware(), todoController.DeleteCategory)
+		todo.POST("/signup", ctrl.SignUpController)
+		todo.POST("/signin", ctrl.SignInController)
+		todo.POST("/addtodo", middleware.TokenAuthMiddleware(), ctrl.AddTodoController)
+		todo.DELETE("/deletetodo", middleware.TokenAuthMiddleware(), ctrl.DeleteTodoController)
+		todo.PUT("/edittodo", middleware.TokenAuthMiddleware(), ctrl.EditTodoController)
+		todo.GET("/getalltodos", middleware.TokenAuthMiddleware(), ctrl.GetAllTodosController)
+		todo.GET("/gettodobycategory", middleware.TokenAuthMiddleware(), ctrl.GetTodoByCategoryController)
+		todo.POST("/marktodo", middleware.TokenAuthMiddleware(), ctrl.MarkTodoController)
+		todo.POST("/addcategory", middleware.TokenAuthMiddleware(), ctrl.AddCategoryController)
+		todo.GET("/getcategory", middleware.TokenAuthMiddleware(), ctrl.GetCategoryController)
+		todo.DELETE("/deletecategory", middleware.TokenAuthMiddleware(), ctrl.DeleteCategoryController)
 	}
 	return router
 }
